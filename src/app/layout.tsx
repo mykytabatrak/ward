@@ -28,7 +28,7 @@ export default function RootLayout({
       data-color-scheme={colorScheme}
     >
       <body className="min-h-[100dvh] bg-gray1 text-gray12 transition-colors">
-        <div className="mx-auto grid max-w-prose grid-rows-[auto_1fr_auto] border-x border-solid border-gray6">
+        <div className="mx-auto grid max-w-prose grid-rows-[auto_1fr_auto] grid-cols-[minmax(0,_1fr)] border-x border-solid border-gray6">
           <header className="sticky top-0 flex min-h-[4rem] items-center justify-between border-b border-solid border-gray6 bg-gray1 px-4 py-2">
             <h1 className="text-3xl font-bold">WARD</h1>
             <UserDropdownMenu colorScheme={colorScheme} />

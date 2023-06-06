@@ -62,7 +62,7 @@ function AuthenticationGroup() {
     <DropdownMenuGroup>
       <DropdownMenuLabel>Authenticate</DropdownMenuLabel>
       <SignInDialog>
-        <DropdownMenuItem onSelect={onSelect}>
+        <DropdownMenuItem disabled onSelect={onSelect}>
           <DropdownMenuItemIcon>
             <EnterIcon />
           </DropdownMenuItemIcon>
@@ -70,7 +70,7 @@ function AuthenticationGroup() {
         </DropdownMenuItem>
       </SignInDialog>
       <SignUpDialog>
-        <DropdownMenuItem onSelect={onSelect}>
+        <DropdownMenuItem disabled onSelect={onSelect}>
           <DropdownMenuItemIcon>
             <Pencil2Icon />
           </DropdownMenuItemIcon>

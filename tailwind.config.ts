@@ -1,14 +1,9 @@
-const plugin = require('tailwindcss/plugin');
-const radixColors = require('@radix-ui/colors');
+import type { Config } from 'tailwindcss';
+import plugin from 'tailwindcss/plugin';
+import * as radixColors from '@radix-ui/colors';
+import { PluginUtils } from 'tailwindcss/types/config';
 
-/**
- * @param {string} hslString
- * @returns {{ hue: number, saturation: number, lightness: number }}
- */
-const parseHSL = (hslString) => {
-  /**
-   * @type {RegExp}
-   */
+const parseHSL = (hslString: string) => {
   const hslRegex =
     /^hsl\((\d+(?:\.\d+)?),\s*(\d+(?:\.\d+)?)%,\s*(\d+(?:\.\d+)?)%\)$/;
 
@@ -25,7 +20,6 @@ const parseHSL = (hslString) => {
 };
 
 const colors = Object.entries(radixColors);
-
 const lightColors = colors
   .filter(([space]) => !space.includes('Dark'))
   .map(([_, value]) => Object.entries(value))
@@ -62,8 +56,33 @@ const darkColorPropertiesMap = darkColors.map(([name, value]) => {
   return [propertyName, `${hue}deg ${saturation}% ${lightness}%`];
 });
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+const radixColorScheme = plugin(
+  function ({ addBase }) {
+    const lightColorProperties = Object.fromEntries(lightColorPropertiesMap);
+    const darkColorProperties = Object.fromEntries(darkColorPropertiesMap);
+
+    addBase({
+      ':root': { 'color-scheme': 'light dark', ...lightColorProperties },
+      ':root[data-color-scheme="light"]': lightColorProperties,
+      ':root[data-color-scheme="dark"]': darkColorProperties,
+      '@media (prefers-color-scheme: light)': {
+        ':root[data-color-scheme="system"]': lightColorProperties,
+      },
+      '@media (prefers-color-scheme: dark)': {
+        ':root[data-color-scheme="system"]': darkColorProperties,
+      },
+    });
+  },
+  {
+    theme: {
+      extend: {
+        colors: Object.fromEntries(colorNameToPropertyMap),
+      },
+    },
+  }
+);
+
+export default {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
@@ -104,54 +123,54 @@ module.exports = {
       },
       keyframes: {
         'popover-in-top': {
-          from: { opacity: 0, transform: 'translateY(2px)' },
-          to: { opacity: 1, transform: 'translateY(0)' },
+          from: { opacity: '0', transform: 'translateY(2px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
         },
         'popover-in-right': {
-          from: { opacity: 0, transform: 'translateX(-2px)' },
-          to: { opacity: 1, transform: 'translateX(0)' },
+          from: { opacity: '0', transform: 'translateX(-2px)' },
+          to: { opacity: '1', transform: 'translateX(0)' },
         },
         'popover-in-bottom': {
-          from: { opacity: 0, transform: 'translateY(-2px)' },
-          to: { opacity: 1, transform: 'translateY(0)' },
+          from: { opacity: '0', transform: 'translateY(-2px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
         },
         'popover-in-left': {
-          from: { opacity: 0, transform: 'translateX(2px)' },
-          to: { opacity: 1, transform: 'translateX(0)' },
+          from: { opacity: '0', transform: 'translateX(2px)' },
+          to: { opacity: '1', transform: 'translateX(0)' },
         },
         'popover-out-top': {
-          from: { opacity: 1, transform: 'translateY(0)' },
-          to: { opacity: 0, transform: 'translateY(2px)' },
+          from: { opacity: '1', transform: 'translateY(0)' },
+          to: { opacity: '0', transform: 'translateY(2px)' },
         },
         'popover-out-right': {
-          from: { opacity: 1, transform: 'translateX(0)' },
-          to: { opacity: 0, transform: 'translateX(-2px)' },
+          from: { opacity: '1', transform: 'translateX(0)' },
+          to: { opacity: '0', transform: 'translateX(-2px)' },
         },
         'popover-out-bottom': {
-          from: { opacity: 1, transform: 'translateY(0)' },
-          to: { opacity: 0, transform: 'translateY(-2px)' },
+          from: { opacity: '1', transform: 'translateY(0)' },
+          to: { opacity: '0', transform: 'translateY(-2px)' },
         },
         'popover-out-left': {
-          from: { opacity: 1, transform: 'translateX(0)' },
-          to: { opacity: 0, transform: 'translateX(2px)' },
+          from: { opacity: '1', transform: 'translateX(0)' },
+          to: { opacity: '0', transform: 'translateX(2px)' },
         },
 
         'overlay-in': {
-          from: { opacity: 0 },
-          to: { opacity: 1 },
+          from: { opacity: '0' },
+          to: { opacity: '1' },
         },
         'overlay-out': {
-          from: { opacity: 1 },
-          to: { opacity: 0 },
+          from: { opacity: '1' },
+          to: { opacity: '0' },
         },
 
         'dialog-in': {
-          from: { opacity: 0, transform: 'translateY(2%) scale(0.96)' },
-          to: { opacity: 1, transform: 'translateY(0) scale(1)' },
+          from: { opacity: '0', transform: 'translateY(2%) scale(0.96)' },
+          to: { opacity: '1', transform: 'translateY(0) scale(1)' },
         },
         'dialog-out': {
-          from: { opacity: 1, transform: 'translateY(0) scale(1)' },
-          to: { opacity: 0, transform: 'translateY(2%) scale(0.96)' },
+          from: { opacity: '1', transform: 'translateY(0) scale(1)' },
+          to: { opacity: '0', transform: 'translateY(2%) scale(0.96)' },
         },
 
         'sheet-in-top': {
@@ -187,35 +206,29 @@ module.exports = {
           to: { transform: 'translate(-100%, 0)' },
         },
       },
-    },
-  },
-  plugins: [
-    plugin(
-      function ({ addBase }) {
-        const lightColorProperties = Object.fromEntries(
-          lightColorPropertiesMap
-        );
-        const darkColorProperties = Object.fromEntries(darkColorPropertiesMap);
-
-        addBase({
-          ':root': { 'color-scheme': 'light dark', ...lightColorProperties },
-          ':root[data-color-scheme="light"]': lightColorProperties,
-          ':root[data-color-scheme="dark"]': darkColorProperties,
-          '@media (prefers-color-scheme: light)': {
-            ':root[data-color-scheme="system"]': lightColorProperties,
-          },
-          '@media (prefers-color-scheme: dark)': {
-            ':root[data-color-scheme="system"]': darkColorProperties,
-          },
-        });
-      },
-      {
-        theme: {
-          extend: {
-            colors: Object.fromEntries(colorNameToPropertyMap),
+      typography: ({ theme }: PluginUtils) => ({
+        DEFAULT: {
+          css: {
+            '--tw-prose-body': theme('colors.gray12 / 1'),
+            '--tw-prose-headings': theme('colors.gray12 / 1'),
+            '--tw-prose-lead': theme('colors.gray11 / 1'),
+            '--tw-prose-links': theme('colors.gray12 / 1'),
+            '--tw-prose-bold': theme('colors.gray12 / 1'),
+            '--tw-prose-counters': theme('colors.gray11 / 1'),
+            '--tw-prose-bullets': theme('colors.gray7 / 1'),
+            '--tw-prose-hr': theme('colors.gray6 / 1'),
+            '--tw-prose-quotes': theme('colors.gray12 / 1'),
+            '--tw-prose-quote-borders': theme('colors.gray6 / 1'),
+            '--tw-prose-captions': theme('colors.gray11 / 1'),
+            '--tw-prose-code': theme('colors.gray12 / 1'),
+            '--tw-prose-pre-code': theme('colors.gray12 / 1'),
+            '--tw-prose-pre-bg': theme('colors.gray3 / 1'),
+            '--tw-prose-th-borders': theme('colors.gray7 / 1'),
+            '--tw-prose-td-borders': theme('colors.gray6 / 1'),
           },
         },
-      }
-    ),
-  ],
-};
+      }),
+    },
+  },
+  plugins: [radixColorScheme, require('@tailwindcss/typography')],
+} satisfies Config;

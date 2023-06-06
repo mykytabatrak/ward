@@ -18,7 +18,7 @@ const dropdownMenuEntryClasses = cva('flex items-center px-4');
 const dropdownMenuItemClasses = cva([
   focusableClasses(),
   dropdownMenuEntryClasses(),
-  'rounded-md h-8 active:bg-gray5 data-[highlighted]:bg-gray4',
+  'rounded-md h-8 active:bg-gray5 data-[highlighted]:bg-gray4 data-[disabled]:text-gray9 select-none data-[disabled]:pointer-events-none',
 ]);
 
 const adornmentPadding = cva('relative pl-6');
