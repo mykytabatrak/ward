@@ -7,4 +7,18 @@
   [role='button'] {
     cursor: default;
   }
+
+  .article header h1 {
+    @apply mb-2 text-4xl;
+    text-wrap: balance;
+  }
+
+  .article header p {
+    @apply text-lg text-gray10;
+    text-wrap: balance;
+  }
+
+  .article header hr {
+    @apply my-4
+  }
 }

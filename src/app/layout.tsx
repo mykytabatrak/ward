@@ -33,7 +33,7 @@ export default function RootLayout({
             <h1 className="text-3xl font-bold">WARD</h1>
             <UserDropdownMenu colorScheme={colorScheme} />
           </header>
-          <main className="px-4 py-2">{children}</main>
+          <main className="px-4 py-8">{children}</main>
           <footer className="flex min-h-[4rem] items-center justify-center border-t border-solid border-gray6 bg-gray2">
             <small className="text-gray11">&copy; Mykyta Batrak 2023</small>
           </footer>
