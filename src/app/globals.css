@@ -8,17 +8,25 @@
     cursor: default;
   }
 
-  .article header h1 {
-    @apply mb-2 text-4xl;
+  .article__title {
+    @apply mb-4 text-4xl;
     text-wrap: balance;
   }
 
-  .article header p {
+  .article__subtitle {
     @apply text-lg text-gray10;
     text-wrap: balance;
   }
 
-  .article header hr {
-    @apply my-4
+  .article__header-divider {
+    @apply my-4;
+  }
+
+  .article__body > *:nth-child(n + 2) {
+    @apply mt-8;
+  }
+
+  .article__paragraph {
+    @apply leading-7;
   }
 }
