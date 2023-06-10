@@ -1,26 +1,32 @@
 import * as React from 'react';
-import { Gallery } from '@/ui/basic/gallery';
+import { Gallery } from '@/ui/primitive/gallery';
+import { Image, ImageProps } from '@/ui/primitive/image';
+import { ArticleImage } from '@/features/article/article-image';
 
-const images = [
+const images: ImageProps[] = [
   {
-    src: 'https://images.unsplash.com/photo-1685987300287-6c1dc4d0508e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3270&q=80',
+    src: 'https://images.unsplash.com/photo-1685987300287-6c1dc4d0508e',
     width: 5184,
     height: 3456,
+    alt: '',
   },
   {
-    src: 'https://images.unsplash.com/photo-1673632156153-d3baf0d0401b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+    src: 'https://images.unsplash.com/photo-1673632156153-d3baf0d0401b',
     width: 2832,
     height: 4248,
+    alt: '',
   },
   {
-    src: 'https://images.unsplash.com/photo-1568231407122-a56e9e9c0a01?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+    src: 'https://images.unsplash.com/photo-1568231407122-a56e9e9c0a01',
     width: 6000,
     height: 4000,
+    alt: '',
   },
   {
-    src: 'https://images.unsplash.com/photo-1684523311553-117123e138ec?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2066&q=80',
+    src: 'https://images.unsplash.com/photo-1684523311553-117123e138ec',
     width: 6177,
     height: 3469,
+    alt: '',
   },
   // {
   //   src: 'https://images.unsplash.com/photo-1685685068235-2bc6942c6af5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=991&q=80',
@@ -77,6 +83,12 @@ export default function Home() {
           laborum totam maiores quos voluptas molestiae earum odio, mollitia,
           tempore nemo sequi quisquam.
         </p>
+        <ArticleImage
+          src="https://images.unsplash.com/photo-1684523311553-117123e138ec"
+          width={6177}
+          height={3469}
+          alt=""
+        />
       </div>
     </article>
   );
